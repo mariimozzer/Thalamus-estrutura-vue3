@@ -1,11 +1,6 @@
 <template>
   <div class="home">
    
-
-
-
-
-
   <div class="three-columns">
   <div class="background-one ">
     <div class="background-one link-container link-one">
@@ -21,7 +16,7 @@
 
   <div class="background-three">
     <div class="background-three link-container link-three">
-      <span style="text-decoration: none">Gestão</span>
+      <span style=" text-decoration: none;" >Gestão</span>
     </div>
   </div>
 </div>
@@ -75,8 +70,10 @@ export default {
 <style scoped>
 
 .home{
-margin-left: 0;
-}
+  position: fixed;
+    bottom: 0;
+    left: 0;
+  }
 
 
 nav {
@@ -88,7 +85,7 @@ nav {
 .three-columns {
   display: flex;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   margin-left: 0;
   font-size: 50px;
 }
@@ -158,8 +155,9 @@ a {
   color: #ffffff;
 }
 
+
 .link-two:hover {
-  color: #111;
+  color: #ffffff;
   transition: color 1s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
@@ -174,7 +172,7 @@ a {
   right: 50%;
   transform: translate(50%, -50%) rotate(0deg) scale(0);
   transition: transform 1s ease;
-  background-color: blue;
+  background-color: rgb(49, 49, 49);
 }
 
 .link-three::after {
@@ -189,7 +187,7 @@ a {
   transition: transform 1s ease;
   mix-blend-mode: difference;
   clip-path: polygon( 20% 60%, 100% 60%, 100% 40%, 20% 40%, 20% 0%, 60% 0%, 60% 20%, 20% 20%);
-  background-color: yellow;
+  background-color: rgb(255, 255, 255);
 
 }
 
@@ -202,7 +200,7 @@ a {
   top: 0;
   right: 0;
   clip-path: polygon( 0% -20%, 100% -30%, 100% -10%, 0% 0%, 0% 130%, 100% 120%, 100% 100%, 0% 110%);
-  background-color: blue;
+  background-color: rgb(49, 49, 49);
   transition: clip-path 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -218,9 +216,7 @@ a {
   transition: transform 1s ease;
   mix-blend-mode: difference;
   clip-path: polygon( 80% 40%, 0% 40%, 0% 60%, 80% 60%, 80% 100%, 40% 100%, 40% 80%, 80% 80%);
-  background-color: yellow;
-
-
+  background-color: rgb(255, 255, 255);
 }
 
 .link-one::before,
@@ -250,11 +246,13 @@ a {
 
 .link-three:hover::after {
   transform: translate(0, 0%) scaleY(1);
+
 }
 
 
 
 .link-three:hover::before {
+
   transform: translate(0%, 0%) scaleY(1);
 }
 
@@ -266,7 +264,7 @@ a {
 
 
 .link-one::before {
-  background-color: red;
+  background-color: rgb(110, 110, 110);
   clip-path: circle(0% at 50% calc(50%));
   transition: clip-path 1s cubic-bezier(0.65, 0, 0.35, 1);
 }

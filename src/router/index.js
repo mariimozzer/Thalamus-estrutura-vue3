@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/Login/LoginView.vue'
 import Login2View from '@/views/Login/Login2View.vue'
 import Login3View from '@/views/Login/Login3View.vue'
-
 //Senha
 import EsqueceuSenhaView from '@/views/Senha/EsqueceuSenhaView'
 import ValidarSenhaView from '@/views/Senha/ValidarSenhaView'
@@ -30,26 +29,74 @@ import ControleDeUsuarios from "@/views/Permissão/ControleDeUsuarios"
 import ControleDeFuncionalidade from "@/views/Permissão/ControleDeFuncionalidade"
 import VinculoFuncionalidade from "@/views/Permissão/VinculoFuncionalidade"
 import FuncionalidadeView from "@/views/Permissão/FuncionalidadeView"
+//Menu Component
+import MenuComponent from "../components/menu/MenuComponent"
+//Menu View
+import GestaoView from "@/views/Menu/GestaoView"
+import FabricaView from "@/views/Menu/FabricaView"
+import AdministrativoView from "@/views/Menu/AdministrativoView"
+
+function guardMyroute(to, from, next) {
+  const isAuthenticated = sessionStorage.getItem('LoggedUser') !== null;
+
+  if (isAuthenticated) {
+    const requiredPermissions = to.meta.requiredPermissions;
+
+    if (requiredPermissions) {
+      const userPermissions = JSON.parse(sessionStorage.getItem('userPermissions'));
+      const hasPermission = userPermissions && requiredPermissions.every(permission => userPermissions.includes(permission));
+
+      if (hasPermission) {
+        next();
+      } else {
+        // Usuário não tem as permissões necessárias
+        next('/access-denied');
+      }
+    } else {
+      next();
+    }
+  } else {
+    // Usuário não está autenticado
+    next('/');
+  }
+}
+
 
 
 const routes = [
+
+  
 
   // Login 
   {
     path: '/',
     name: 'Login',
     component: LoginView,
-   
+    meta: {
+      hideMenu: true
+    },
+    // beforeEnter() {
+    //   alert('You are not authorized to view this page')
+    //   // block navigation
+    //   return false
+    // }
   },
   {
     path: '/2',
     name: 'Login2',
     component: Login2View,
+    beforeEnter: guardMyroute,
+    meta: {
+      hideMenu: true
+    }
    
   }, {
     path: '/3',
     name: 'Login3',
     component: Login3View,
+    meta: {
+      hideMenu: true
+    }
    
   },
 
@@ -57,6 +104,7 @@ const routes = [
   {
     path: '/alterarSenha',
     name: 'AlterarSenha',
+    beforeEnter: guardMyroute,
     component: AlterarSenhaView,
   },
 
@@ -64,12 +112,18 @@ const routes = [
     path: '/esqueceuSenha',
     name: 'EsqueceuSenha',
     component: EsqueceuSenhaView,
+    meta: {
+      hideMenu: true
+    }
   },
 
   {
     path: '/validarSenha', 
     name: 'ValidarSenha',
     component: ValidarSenhaView,
+    meta: {
+      hideMenu: true
+    }
   },
 
   //Home
@@ -92,9 +146,12 @@ const routes = [
     component: Home3View,
   },
   {
-    path: '/home4', 
+    path: '/home4',
     name: 'Home4View',
     component: Home4View,
+    // meta: {
+    //   requiredPermissions: ['permission1', 'permission2'] // Adicione as permissões necessárias para acessar esta rota
+    // }
   },
   {
     path: '/home5', 
@@ -232,7 +289,7 @@ const routes = [
   },
   {
     path: '/vinculo-de-funcionalidade',
-    name: 'VincularFuncionalidade',
+    name: 'VinculoDeFuncionalidade',
     component: VinculoFuncionalidade,
     title: 'Vincular Funcionalidade'
     
@@ -260,10 +317,35 @@ const routes = [
     name: 'ExcluirFuncionalidade',
     component: FuncionalidadeView,
     title: 'Excluir Funcionalidade'  
-  }
+  },
+  //Menu Component
+  {
+    path: '/menu',
+    name: 'Menu',
+    component: MenuComponent,
+    title: 'Menu'  
+  },
 
-
-
+//Menu
+{
+    path: '/gestao',
+    name: 'Gestao',
+    component: GestaoView,
+    title: 'Gestao' 
+  
+},
+{
+    path: '/administrativo',
+    name: 'Administrativo',
+    component: AdministrativoView,
+    title: 'Administrativo' 
+},
+{
+    path: '/fabrica',
+    name: 'Fabrica',
+    component: FabricaView,
+    title: 'Fabrica' 
+}
 
 
 ]
@@ -275,4 +357,12 @@ const router = createRouter({
 })
 
 
+// router.beforeEach((to, from, next) => {
+//   console.log(`Navigating from: ${from.name}`)
+//   console.log(`Navigating to: ${to.name}`);
+ 
+//   next();
+// });
+
+    
 export default router

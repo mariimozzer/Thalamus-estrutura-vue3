@@ -37,7 +37,7 @@
                                         )" class="text-danger">Por favor, preencha todos os campos.</div>
     
                 <div class="col-sm-12 text-center">
-                    <button class="botaoLogin" value="Entrar"><i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
+                    <button class="button-default" value="Entrar"><i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
                                                     <span v-if="!loading">Entrar</span>
                                                     <span v-if="loading">Processando...</span></button>
                 </div>
@@ -53,6 +53,8 @@
 import axios from 'axios';
 
 export default {
+   
+  
     name: "LoginComponent2",
 
     components: {

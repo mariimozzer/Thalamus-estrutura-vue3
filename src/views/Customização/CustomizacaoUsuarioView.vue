@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <br><br><br><br>
-                <h4 class="titulo">Preferências de Usuário&nbsp;&nbsp;<i class="fa-solid fa-palette"></i></h4>
+                <h5 class="titulo">Preferências de Usuário&nbsp;&nbsp;<i class="fa-solid fa-palette"></i></h5>
                 <hr>
                 <br>
             </div>
@@ -65,13 +65,17 @@ export default {
             selectedFont: "",
             selectedFontSize: "",
             selectedColor: "",
+            loading: ""
         }
     },
 
     methods: {
         updatePreview() {
 
+            this.loading = true
         },
+
+
     }
 }
 </script>

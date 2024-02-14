@@ -48,7 +48,7 @@
                         <a href="#" class="ml-auto mb-0 text-sm">Esqueceu sua senha ?</a>
                     </div>
                     <div class="row mb-3 px-3 justify-content-center" >
-                        <button type="submit" class="btn">Login</button>
+                        <button type="submit" class="button-default">Login</button>
                     </div>
                     <!-- <div class="row mb-4 px-3">
                         <small class="font-weight-bold">Don't have an account? <a class="text-danger ">Register</a></small>

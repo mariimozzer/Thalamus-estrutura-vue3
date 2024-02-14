@@ -1,8 +1,18 @@
 import axios from "axios";
 
-const api = axios.create({
-    baseURL: 'http://192.168.0.6:8000/api'
-});
+  const baseURL= 'http://192.168.0.6:8000/api';
+   const devURL = 'http://192.168.0.6:8082';
+
+
+   const api = axios.create({
+    baseURL: baseURL,
+    devURL: devURL,
+ });
+
+//local de armazenamento das fotos de visitante e colaborador
+export const urlFoto = {
+  caminhoFoto: `http://192.168.0.6:8000/storage/`,
+};
 
 
 api.interceptors.request.use(

@@ -6,7 +6,9 @@
             <div style="text-align: right;">
                 <b-button variant="outline-secondary" @click="toggleShowPassword ">
                     <!-- <b-icon :icon="showNewPasswordConf ? 'eye-fill' : 'eye-slash-fill'"></b-icon> -->
-                    <i class="fa-solid fa-eye" :icon="showNewPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
+                    <!-- <i class="fa-solid fa-eye" :icon="showNewPassword ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i> -->
+                    <i class="fas" :class="{ 'fa-eye-slash': showNewPassword, 'fa-eye': !showNewPassword }"></i>
+
                 </b-button>
             </div>
             <br>
@@ -61,7 +63,7 @@
     
     
     
-            <b-button @click="resetPassword" class="b-button" v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>
+            <b-button @click="resetPassword" class="button-default" v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>
                 <b-icon v-if="!loading" icon="check-circle-fill" aria-hidden="true"></b-icon>
                 <i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
                 <span v-if="!loading">Salvar </span>

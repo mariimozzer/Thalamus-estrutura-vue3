@@ -22,21 +22,28 @@
             </div>
             <br>
     
-            <div class="form-check ">
-                <input class="form-check-input" type="radio" id="roboflex" value="roboflex" v-model="local">
-                <label class="form-check-label" for="roboflex"> Roboflex </label>
-                <br>
-                <input class="form-check-input" type="radio" id="zontec" value="zontec" v-model="local">
-                <label class="form-check-label" for="zontec"> Zontec </label>
-            </div>
-
+            <!-- <div class="form-check ">
+                        <input class="form-check-input" type="radio" id="roboflex" value="roboflex" v-model="local">
+                        <label class="form-check-label" for="roboflex"> Roboflex </label>
+                        <br>
+                        <input class="form-check-input" type="radio" id="zontec" value="zontec" v-model="local">
+                        <label class="form-check-label" for="zontec"> Zontec </label>
+                    </div> -->
+    
+            <ul style="list-style: none;  margin: 0; padding: 0;">
+                <li v-for="local in localData" :key="local.local_nome">
+                    <input type="radio" :value="local.id" v-model="localSelecionado" @change="salvarLocalSelecionado" style="margin-right: 5px;" />
+                    <span>{{ local.local_nome }}</span>
+                </li>
+            </ul>
+    
             <br>
             <div class="col-sm-12 text-center">
-                <button class="botaoLogin" value="Entrar">
-                                              <i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
-                                              <span v-if="!loading">Entrar</span>
-                                              <span v-if="loading">Processando...</span>
-                                            </button>
+                <button class="button-default" value="Entrar">
+                                                          <i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
+                                                          <span v-if="!loading">Entrar</span>
+                                                          <span v-if="loading">Processando...</span>
+                                                        </button>
             </div>
     
             <div class="col-sm-12" style="text-align: center; font-size: 15px;">
@@ -49,6 +56,8 @@
 <script>
 import axios from 'axios';
 import { createToaster } from "@meforma/vue-toaster";
+import api from '../../services/api';
+
 
 const toaster = createToaster({
     position: "top-right",
@@ -59,7 +68,7 @@ export default {
     name: 'LoginComponent',
 
     components: {
-        
+
     },
 
 
@@ -72,12 +81,19 @@ export default {
             id: '',
             loading: false,
             user: null,
+            menuUrl: '',
+            localSelecionado: null,
+            localData: [],
+            apiUrl: api.defaults.baseURL,
+
         }
     },
 
     mounted() {
-        if (localStorage.local) {
-            this.local = localStorage.local
+        this.buscaLocal();
+
+        if (localStorage.localSelecionado) {
+            this.localSelecionado = localStorage.localSelecionado
         }
 
 
@@ -86,46 +102,66 @@ export default {
 
     watch: {
         local(newLocal) {
-            localStorage.local = newLocal;
+            localStorage.localSelecionado = newLocal;
         }
     },
 
+
+
+
     methods: {
-
-
-        login() {
-
-            if(!this.email ){
-                toaster.show(`Por favor, preencha o e-mail`, { type: "error" });
+        async login() {
+            if (!this.email || !this.password) {
+                toaster.show(`Preencha e-mail e senha`, { type: "error" });
+                return;
             }
 
-            if(!this.password ){
-                toaster.show(`Por favor, preencha a senha`, { type: "error" });
+            try {
+                const response = await axios.post('http://192.168.0.6:8000/api/login', {
+                    email: this.email,
+                    password: this.password,
+                });
+
+                const { user, token } = response.data;
+                const userId = user.id;
+
+                // Salvar informações no sessionStorage
+                sessionStorage.setItem('id', userId);
+                sessionStorage.setItem('userName', user.name);
+                sessionStorage.setItem('token', token);
+                sessionStorage.setItem('LoggedUser', true);
+
+                // Atualizar permissões do usuário
+                const menuUrl = `http://192.168.0.6:8000/api/menu/usuario/${userId}`;
+                const menuResponse = await axios.get(menuUrl);
+                const userPermissions = menuResponse.data.map((item) => item.nome.toLowerCase());
+
+                // Chamar a ação para atualizar as permissões no Vuex
+                this.$store.dispatch('updateUserPermissions', userPermissions);
+
+                // Redirecionar para a página Home4View
+                this.$router.push({ name: "Home4View" });
+            } catch (error) {
+                this.email = '';
+                this.password = '';
+                console.error(error);
+                toaster.show(`E-mail e/ou senha estão incorretos!`, { type: "error" });
             }
-
-            axios.post('http://192.168.0.6:8000/api/login', {
-                email: this.email,
-                password: this.password,
-            }).then(
-                res => {
-                    this.id = res.data.user.id
-                    this.user = res.data.user.name
-                    localStorage.setItem('userName', this.user)
-                    localStorage.setItem('token', res.data.token)
-                    this.loading = false
-                    this.$router.push({ name: "HomeView" })
-                }
-            ).catch(
-                err => {
-
-                    this.email = ''
-                    this.password = ''
-                    console.log(err)
-                    toaster.show(`E-mail e/ou senha estão incorretos!`, { type: "error" });
+        },
 
 
-                }
-            )
+        async buscaLocal() {
+            try {
+                const response = await fetch(`${this.apiUrl}/local`);
+                this.localData = await response.json();
+            } catch (error) {
+                console.error('Error ao buscar empresas', error);
+                toaster.show(`Erro buscar empresa`, { type: "error" });
+            }
+        },
+
+        salvarLocalSelecionado() {
+            localStorage.setItem('localSelecionado', this.localSelecionado);
         },
 
     }

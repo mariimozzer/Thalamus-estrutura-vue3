@@ -75,8 +75,9 @@ logout() {
   
   <style scoped>
 .home{
-  margin-left: 0;
-}
+  position: fixed;
+    bottom: 0;
+    left: 0;}
 
   nav {
       position: fixed;
@@ -98,7 +99,7 @@ logout() {
     background-color: #000000;
       box-shadow: 0 0 1000px rgb(0, 0, 0);
       cursor: pointer;
-      opacity: 0.3;
+      opacity: 0.8;
   }
 
 

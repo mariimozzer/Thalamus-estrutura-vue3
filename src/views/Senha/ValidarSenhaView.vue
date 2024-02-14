@@ -26,14 +26,13 @@
                 </div>
                 <input type="number" class="form-control" :disabled="codigoValido" placeholder="Digite o código do e-mail" v-model="codigo">
             </div>
-    
-            <button v-if="!codigoValido" @click="validarCodigo" class="b-button">
+
+            <button class="button-default" v-if="!codigoValido" @click="validarCodigo" >
                                             <i v-if="!loading" class="fa-solid fa-key" aria-hidden="true"></i> &nbsp;
                                             <i v-if="loading" class="fas fa-spinner fa-spin"></i>
                                             <span v-if="!loading">Verificar </span>
                                             <span v-if="loading"> &nbsp; Verificando...</span>
                                         </button>
-    
             <div v-if="codigoValido">
     
                 <br>
@@ -57,7 +56,7 @@
                     <p>A senhas não conferem!</p>
                 </div>
     
-                <button @click="resetarSenha" class="b-button" v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>
+                <button @click="resetarSenha" class="button-default" v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>
                                     <i v-if="!loading" icon="check-circle-fill" aria-hidden="true"></i>
                                     <i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
                                     <span v-if="!loading">Resetar Senha</span>
@@ -196,7 +195,7 @@ export default {
                         this.new_password_confirmation = ''
                         this.loading = false
                         toaster.show(`Senha resetada com sucesso!`, { type: "success" });
-                        this.$router.push({ name: "HomeView"})
+                        // this.$router.push({ name: "HomeView"})
 
                         console.log(response)
                     })

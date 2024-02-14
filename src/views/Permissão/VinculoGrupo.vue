@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-2 view">
         <div class="col-12" style="text-align: center;">
-
+            <br>
         <h3 class="titulo"> Vincular Usuário a Grupos </h3>
         <hr>
         </div>
@@ -85,6 +85,10 @@
                                 <i class="fa-solid fa-magnifying-glass"></i> </b-input-group-prepend>
                             <b-form-input type="text" class="form-control" v-model="searchTerm" @input="searchUser" placeholder=" Pesquisar Usuario"></b-form-input>
                         </b-input-group>
+
+
+
+                        
                     </div>
     
                     <div class="col-sm-12">
@@ -435,6 +439,11 @@ export default {
         },
     },
 
+    created(){
+        this.userName = sessionStorage.getItem('userName')
+
+    },
+
     mounted() {
         this.getAllGrupos();
         this.getAllUsuarios();
@@ -444,9 +453,7 @@ export default {
 </script>
 
 <style scoped>
-.view {
-    position: fixed;
-}
+
 
 .titulo-tabela {
     font-weight: bold;

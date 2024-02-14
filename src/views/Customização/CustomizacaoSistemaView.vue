@@ -7,9 +7,16 @@
 
             </div>
             <section>
-    
-                <h6>Configuração Geral &nbsp;&nbsp;<i class="fa-solid fa-gear"></i></h6>
+                <h5 class="titulo">Configuração Geral &nbsp;<i class="fa-solid fa-gears"></i></h5>
                 <hr>
+                <br>
+                <p>Selecione suas preferências para o sistema</p>
+
+                <br><br>
+                <h6>Temas &nbsp;<i class="fa-solid fa-wand-magic-sparkles"></i></h6>
+                <hr>
+                <p>Customize o tema da sua aplicação</p>
+                <br>
                 <label>
                                              <input type="radio" id="temas" name="temas" value="tema1">
                                               Tema 1

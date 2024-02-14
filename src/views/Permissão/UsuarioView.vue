@@ -24,14 +24,14 @@
     
             <div class="col-sm-12">
                 <!-- <div class="form-group">
-                                            <label for="grupo_id">Grupo</label>
-                                            <select class="form-select combo" v-model="usuario.grupo_id">
-                                                            <option value="" disabled>Selecione o grupo</option>
-                                                            <option v-for="item in grupos" :key="item.id" :value="item.id">{{ item.nome }}</option></select>
-                            
-                            
-                            
-                                        </div>  -->
+                                                <label for="grupo_id">Grupo</label>
+                                                <select class="form-select combo" v-model="usuario.grupo_id">
+                                                                <option value="" disabled>Selecione o grupo</option>
+                                                                <option v-for="item in grupos" :key="item.id" :value="item.id">{{ item.nome }}</option></select>
+                                
+                                
+                                
+                                            </div>  -->
     
     
     
@@ -39,11 +39,11 @@
                 <button @click="cancelar" class="btn btn-default float-right">Cancelar</button>
     
                 <button @click="salvarUsuario" aria-hidden="true" class="btn btn-primary float-right mr-2">
-                            <i v-if="loading" class="fas fa-spinner fa-spin"></i>
-                            <span v-if="!loading">Salvar</span>
-                            <span v-if="loading">&nbsp; Salvando...</span>
-            
-                        </button>
+                                <i v-if="loading" class="fas fa-spinner fa-spin"></i>
+                                <span v-if="!loading">Salvar</span>
+                                <span v-if="loading">&nbsp; Salvando...</span>
+                
+                            </button>
             </div>
     
     
@@ -170,6 +170,10 @@ export default {
             this.usuario = new Usuario();
             this.$router.push({ name: "ControleDeUsuarios" })
         }
+    },
+
+    created() {
+       
     }
 }
 </script>

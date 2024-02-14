@@ -18,7 +18,7 @@
                 </b-input-group-append>
             </b-input-group>
     
-            <button  @click="resetarSenha" type="button">
+            <button class="button-default"  @click="resetarSenha" type="button">
                                     <i v-if="!loading" class="fa-solid fa-paper-plane" aria-hidden="true"></i>
                                     <i v-if="loading" class="fas fa-spinner fa-spin"></i> &nbsp;
                                     <span v-if="!loading">Enviar código de recuperação</span>
