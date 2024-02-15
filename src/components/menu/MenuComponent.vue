@@ -40,7 +40,7 @@
       <li v-for="subsubmenu in submenu.filho" :key="subsubmenu.id">
         <router-link
           v-if="isSubSubMenuEnabled(subsubmenu)"
-          :to="`http://192.168.0.5:${subsubmenu.port}${subsubmenu.url}/`"
+          :to="`http://192.168.0.5:${subsubmenu.porta}${subsubmenu.URL}/`"
           class="submenu-link"
           :style="{ color: 'rgb(255, 255, 255)', cursor: 'pointer' }"
         >
@@ -82,7 +82,7 @@ export default {
 
         getSubSubMenuUrl(subsubmenu) {
             if (subsubmenu.port) {
-                return `http://192.168.0.6:${subsubmenu.port}${subsubmenu.url}/`;
+                return `http://192.168.0.5:${subsubmenu.porta}${subsubmenu.URL}/`;
             } else {
                 console.error("Erro: A porta não está definida para o subsubmenu", subsubmenu);
                 return '#';
